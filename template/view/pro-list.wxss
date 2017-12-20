@@ -19,6 +19,7 @@
 
 .list-item .rside {
   flex: 1;
+  overflow-x: hidden;
 }
 
 .list-item .pro-title {
@@ -36,7 +37,7 @@
   font-size: 30rpx;
   color: #000;
   font-weight: 600;
-  width: 180rpx;
+  width: 220rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -89,7 +90,7 @@
   color: #666;
   border-top: 1rpx solid #ccc;
   margin-top: 8rpx;
-  padding-top: 8rpx;
+  padding-top: 20rpx;
 }
 
 .list-item .shop-desc text {

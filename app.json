@@ -1,16 +1,21 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/apitest/apitest",
     "pages/order/order",
     "pages/about/about",
-
+    
+    "pages/building/building",
     "pages/evaluate/evaluate",
     "pages/usesuccess/usesuccess",
+    "pages/buysuccess/buysuccess",
     
     "pages/collection/collection",
     "pages/bindphone/bindphone",
     "pages/coupon/coupon",
     "pages/commission/commission",
+    "pages/qrcode/qrcode",
+    "pages/aboutme/aboutme",
 
     "pages/search/search",
     "pages/shoplist/shoplist",
@@ -49,7 +54,7 @@
   "window":{
     "backgroundTextStyle":"dark",
     "navigationBarBackgroundColor": "#02c1c9",
-    "navigationBarTitleText": "淅峡生活平台",
+    "navigationBarTitleText": "武陟派",
     "navigationBarTextStyle":"#ffffff"
   }
 }

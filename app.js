@@ -1,35 +1,81 @@
 //app.js
+import updateUserInfo from './utils/updateuserinfo';
 App({
-  onLaunch: function () {
-    const self = this;
-    // 登录
+  onLaunch: function(options) {
+    console.log(options);
+    wx.showLoading({
+      mask: true,
+      title: '加载中'
+    });
+    const api = this.globalData.api;
+    this.login(); //登陆
+  },
+
+  // 登录
+  login() {
+    const api = this.globalData.api;
     wx.login({
       success: res => {
-        console.log(res);
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-    wx.getSetting({
-      success: res => {
-          wx.getUserInfo({
-            success: res => {
-              console.log(res);
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res);
-              }
+        //向后台发送res.code 换取openid
+        wx.request({
+          method: 'GET',
+          url: `${api}user/get_openid`,
+          data: {
+            code: res.code
+          },
+          header: {
+            'content-type': 'application/json'
+          },
+          success: res => {
+            this.globalData.userID = res.data;
+            if (this.globalData.parentID) {
+              wx.request({
+                url: `${api}user/modify_parentid?userId=${res.data}&parentId=${this.globalData.parentID}`,
+                success: res => {
+                  console.log(res);
+                }
+              });
             }
-          })
+            wx.request({
+              url: `${api}user/user_info?userid=${res.data}`,
+              success: res => {
+                this.globalData.phone = res.data.phone;
+              }
+            });
+            wx.hideLoading();
+            this.getUserInfo();
+          }
+        });
       }
     });
-
   },
+
+  getUserInfo() {
+    wx.getUserInfo({
+      success: res => {
+        let userInfo = res.userInfo,
+          api = this.globalData.api,
+          userID = this.globalData.userID;
+        //保存用户信息
+        this.globalData.userInfo = userInfo;
+        if (userID) {
+          updateUserInfo(userInfo, api, userID);
+        }
+      },
+      fail() {
+        console.log('getUserInco fail');
+      }
+    });
+  },
+
   globalData: {
+    userID: '',
+    parentID: '',
+    phone: '',
+    api: '/index.php/api/',
+    imgUrl: '/',
     userInfo: null,
-    address: ''
+    address: '',
+    appDescription: '武陟生活第一平台'
   }
-})
+});

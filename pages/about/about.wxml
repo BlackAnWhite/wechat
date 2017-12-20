@@ -1,94 +1,115 @@
 <!--logs.wxml-->
-<view class="container">
-  <!-- header -->
-  <view class="header">
-    <!-- userinfo -->
-    <view class="top">
-      <view class="lside">
-        <image src="{{userInfo.avatarUrl}}"></image>
-      </view>
-      <view class="center">
-        <text>{{userInfo.nickName?userInfo.nickName:'请登录'}}</text>
-        <text>LV: 4</text>
-      </view>
-      <view class="rside">
-        <image src="../../images/code.png"></image>
-      </view>
-    </view>
-    <!-- card -->
-    <view class="bottom">
-      <view class="info-card-warp">
-        <view class="info-card">
+<block wx:if="{{loaded}}">
+  <block wx:if="{{showPage}}">
+    <view class="container">
+      <!-- header -->
+      <view class="header">
+        <!-- userinfo -->
+        <view class="top">
           <view class="lside">
-            <text>我的团长：</text>
-            <text>我的团员：</text>
-            <text>我的排名：</text>
-            <text class="commission">￥ 99.99</text>
-            <text>当前佣金</text>
+            <image src="{{userInfo.avatarUrl}}"></image>
+          </view>
+          <view class="center">
+            <text>{{userInfo.nickName?userInfo.nickName:'请登录'}}</text>
+            <text>LV: {{info.level}}</text>
           </view>
           <view class="rside">
-            <text>大简木·羽衣</text>
-            <text>999</text>
-            <text>999</text>
-            <navigator url="../commission/commission?title='测试'">
-              <text class="commission-withdrawals">佣金提现</text>
-            </navigator>
+            <image bindtap="handleGoToQRCode" src="../../images/code.png"></image>
+            <text>分享二维码</text>
+          </view>
+        </view>
+        <!-- card -->
+        <view class="bottom">
+          <view class="info-card-warp">
+            <view class="info-card">
+              <view class="lside">
+                <text>我的团长：</text>
+                <text>我的团员：</text>
+                <text>我的排名：</text>
+                <text class="commission">￥ {{info.commission}}</text>
+                <text>当前佣金</text>
+              </view>
+              <view class="rside">
+                <text>{{!info.parent_name?'无':info.parent_name}}</text>
+                <text>{{info.childnum}}</text>
+                <text>{{info.paiming}}</text>
+                <navigator url="../commission/commission?childnum={{info.childnum}}&commission={{info.commission}}&paiming={{info.paiming}}&totalcommission={{info.totalcomm}}">
+                  <text class="commission-withdrawals">佣金提现</text>
+                </navigator>
+              </view>
+            </view>
           </view>
         </view>
       </view>
+      <!-- list -->
+      <view class="about-list">
+        <navigator url="../collection/collection">
+          <view class="about-list-item">
+            <view>
+              <image src="../../images/icon01.png"></image>
+            </view>
+            <view>
+              <text>我的收藏</text>
+            </view>
+            <view>
+              <image src="../../images/icons01.png"></image>
+            </view>
+          </view>
+        </navigator>
+        <navigator url="../coupon/coupon">
+          <view class="about-list-item">
+            <view>
+              <image src="../../images/icon02.png"></image>
+            </view>
+            <view>
+              <text>我的优惠券</text>
+            </view>
+            <view>
+              <image src="../../images/icons01.png"></image>
+            </view>
+          </view>
+        </navigator>
+        <navigator url="../bindphone/bindphone?phone={{info.phone}}">
+          <view class="about-list-item">
+            <view>
+              <image src="../../images/icon03.png"></image>
+            </view>
+            <view>
+              <text>{{info.phone?'修改手机号':'绑定手机号'}}</text>
+            </view>
+            <view>
+              <image src="../../images/icons01.png"></image>
+            </view>
+          </view>
+        </navigator>
+        <view class="about-list-item" bindtap="handleMakePhone">
+          <view>
+            <image src="../../images/icon06.png"></image>
+          </view>
+          <view>
+            <text>联系客服</text>
+          </view>
+          <view>
+            <image src="../../images/icons01.png"></image>
+          </view>
+        </view>
+        <navigator url="../aboutme/aboutme">
+          <view class="about-list-item">
+            <view>
+              <image src="../../images/icon04.png"></image>
+            </view>
+            <view>
+              <text>关于我们</text>
+            </view>
+            <view>
+              <image src="../../images/icons01.png"></image>
+            </view>
+          </view>
+        </navigator>
+      </view>
     </view>
-  </view>
-  <!-- list -->
-  <view class="about-list">
-    <navigator url="../collection/collection">
-      <view class="about-list-item">
-        <view>
-          <image src="../../images/icon01.png"></image>
-        </view>
-        <view>
-          <text>我的收藏</text>
-        </view>
-        <view>
-          <image src="../../images/icons01.png"></image>
-        </view>
-      </view>
-    </navigator>
-    <navigator url="../coupon/coupon">
-      <view class="about-list-item">
-        <view>
-          <image src="../../images/icon02.png"></image>
-        </view>
-        <view>
-          <text>我的优惠券</text>
-        </view>
-        <view>
-          <image src="../../images/icons01.png"></image>
-        </view>
-      </view>
-    </navigator>
-    <navigator url="../bindphone/bindphone">
-      <view class="about-list-item">
-        <view>
-          <image src="../../images/icon03.png"></image>
-        </view>
-        <view>
-          <text>绑定手机号</text>
-        </view>
-        <view>
-          <image src="../../images/icons01.png"></image>
-        </view>
-      </view>
-    </navigator>
-    <view class="about-list-item">
-      <view>
-        <image src="../../images/icon04.png"></image>
-      </view>
-      <view>
-        <text>关于我们</text>
-      </view>
-      <view>
-        <image src="../../images/icons01.png"></image>
-      </view>
-    </view>
-  </view>
-</view>
+  </block>
+</block>
+<block wx:else>
+  <view class="page-on-load">页面加载中...</view>
+</block>
